@@ -1,8 +1,8 @@
 # APIs de gestion de galeries photos
 
-__Web service REST en Laravel 6 permettant de gérer en backend des galeries photos avec accès utilisateur sécurisé avec OAuth (suivant projet "ekergreis/secure_web_spa").__
+__Web service REST en Laravel 6 permettant de gérer en backend des galeries photos avec accès utilisateur sécurisé avec OAuth (suivant projet ["ekergreis/secure_web_spa"](../secure_web_spa).__
 
-__Documentation du web service dans [public/docs/](public/docs/index.html)__
+__Documentation du web service : /docs/ (chemin complet : ./public/docs/)__
 
 Les utilisateurs sont répartis par groupe pour pouvoir accédér aux galeries et images. 
 Pour empêcher la récupération illicite d'images (par exemple en brute force), Les fichiers images de chaque galerie sont stockés dans un répertoire token, et, le nom du fichier image est également sous forme de token (chaine aléatoire de 32 caractères). 
