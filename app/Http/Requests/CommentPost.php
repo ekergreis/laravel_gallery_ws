@@ -38,4 +38,13 @@ class CommentPost extends FormRequest
             'comment' => 'required|string|uniqueCommentImage:'.$this->id.','.$this->user()->id,
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'id.*' => __('gallery.image.id_fail'),
+            'comment.unique_comment_image' => __('gallery.comment.doublon'),
+            'comment.*' => __('gallery.comment.invalid'),
+        ];
+    }
 }

@@ -1,31 +1,26 @@
 # APIs de gestion de galeries photos
 
-__Web service REST en Laravel 6 permettant de gérer en backend des galeries photos avec accès utilisateur sécurisé avec OAuth (suivant projet ["ekergreis/secure_web_spa"](https://github.com/ekergreis/secure_web_spa).__
+__Web service REST en Laravel 6 permettant de gï¿½rer en backend des galeries photos avec accï¿½s utilisateur sï¿½curisï¿½ avec OAuth (suivant projet ["ekergreis/secure_web_spa"](https://github.com/ekergreis/secure_web_spa).__
 
 __Documentation du web service : /docs/ (chemin complet : ./public/docs/)__
 
-- Les utilisateurs sont répartis par groupe pour pouvoir accédér aux galeries et images. 
-- Pour empêcher la récupération illicite d'images (par exemple en brute force), Les fichiers images de chaque galerie sont stockés dans un répertoire token, et, le nom du fichier image est également sous forme de token (chaine aléatoire de 32 caractères). 
-- Des commentaires peuvent être enregistrés pour les images. 
-- Des "likes" peuvent être indiqués sur des images ou commentaires.
+- Les utilisateurs sont rï¿½partis par groupe pour pouvoir accï¿½dï¿½r aux galeries et images. 
+- Pour empï¿½cher la rï¿½cupï¿½ration illicite d'images (par exemple en brute force), Les fichiers images de chaque galerie sont stockï¿½s dans un rï¿½pertoire token, et, le nom du fichier image est ï¿½galement sous forme de token (chaine alï¿½atoire de 32 caractï¿½res). 
+- Des commentaires peuvent ï¿½tre enregistrï¿½s pour les images. 
+- Des "likes" peuvent ï¿½tre indiquï¿½s sur des images ou commentaires.
 
 
-### Récupération sources et installation :
+### Rï¿½cupï¿½ration sources et installation :
 
 	$ git clone https://ekergreis@bitbucket.org/ekergreis/laravel_gallery_ws.git
 	$ composer install
 
-Configurer le nom de votre base de données dans le fichier .env
+Configurer le nom de votre base de donnï¿½es dans le fichier .env
 	
 	$ php artisan migrate
 	$ php artisan db:seed
 	$ php artisan passport:install
-	
-*__Reste à améliorer :__
-
-- Compléter les tests unitaires
-- Regrouper les messages de retours des APIs dans un fichier de traduction (ressources/lang/fr)*
-
+    
 
 # Enjoy !!!
 

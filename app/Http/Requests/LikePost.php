@@ -44,4 +44,14 @@ class LikePost extends FormRequest
             'id_comment' => 'integer|nullable|uniqueLike:'.$this->id_comment.','.$this->id_image.','.$this->user()->id
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'id_image.unique_like' => __('gallery.like.doublon'),
+            'id_image.*' => __('gallery.like.invalid'),
+            'id_comment.unique_like' => __('gallery.like.doublon'),
+            'id_comment.*' => __('gallery.like.invalid'),
+        ];
+    }
 }

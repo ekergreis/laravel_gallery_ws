@@ -27,4 +27,11 @@ class GroupGet extends FormRequest
             'id' => 'required|integer|exists:groups,id',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'id.*' => __('gallery.group.id_fail'),
+        ];
+    }
 }

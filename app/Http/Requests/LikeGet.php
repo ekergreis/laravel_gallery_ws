@@ -27,4 +27,11 @@ class LikeGet extends FormRequest
             'id' => 'required|integer|exists:likes,id',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'id.*' => __('gallery.like.id_fail'),
+        ];
+    }
 }

@@ -27,4 +27,11 @@ class ImageGet extends FormRequest
             'id' => 'required|integer|exists:images,id',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'id.*' => __('gallery.image.id_fail'),
+        ];
+    }
 }

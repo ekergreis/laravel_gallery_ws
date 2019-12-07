@@ -77,14 +77,14 @@ class ImagesController extends Controller
                             $tImage->user_id = $request->user()->id;
                             $tImage->save();
 
-                            return response(["message" => "Image ajoutée"], 200);
+                            return response(["message" => __('gallery.image.add_success')], 200);
                         }
                     }
                 }
-                return response(["message" => "Image existe déjà"], 400);
+                return response(["message" => __('gallery.image.add_fail_exist')], 400);
             }
         }
-        return response('', 400);
+        return response(["message" => __('gallery.image.add_fail')], 400);
     }
 
     /**
@@ -101,9 +101,9 @@ class ImagesController extends Controller
             $gestionDelete = new GestionDelete($request->user());
             $resultat = $gestionDelete->delImage($tImage);
 
-            if($resultat) return response(["message" => "OK"], 200);
+            if($resultat) return response(["message" => __('gallery.image.del_success')], 200);
         }
 
-        return response(["message" => "NOK"], 400);
+        return response(["message" => __('gallery.image.del_fail')], 400);
     }
 }

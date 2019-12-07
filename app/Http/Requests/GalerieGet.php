@@ -27,4 +27,11 @@ class GalerieGet extends FormRequest
             'id' => 'required|integer|exists:galeries,id',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'id.*' => __('gallery.galerie.id_fail'),
+        ];
+    }
 }

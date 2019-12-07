@@ -34,7 +34,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json(['message' => 'Utilisateur créé !!!'], 201);
+        return response()->json(['message' => __('gallery.user.add_success')], 201);
     }
 
     /**
@@ -44,6 +44,6 @@ class UserController extends Controller
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        return response()->json(['message' => 'Déconnexion OK']);
+        return response()->json(['message' => __('gallery.user.logout_success')]);
     }
 }

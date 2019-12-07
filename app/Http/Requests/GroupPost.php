@@ -27,4 +27,12 @@ class GroupPost extends FormRequest
             'name' => 'required|string|unique:groups'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.unique' => __('gallery.group.doublon'),
+            'name.*' => __('gallery.group.invalid_name'),
+        ];
+    }
 }

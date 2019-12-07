@@ -33,4 +33,13 @@ class ImagePost extends FormRequest
             'data' => 'required|string'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'id.exists' => __('gallery.galerie.id_fail'),
+            'extension.*' => __('gallery.image.invalid_extension'),
+            'data.*' => __('gallery.image.invalid_data'),
+        ];
+    }
 }

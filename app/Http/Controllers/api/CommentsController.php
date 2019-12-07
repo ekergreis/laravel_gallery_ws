@@ -54,10 +54,10 @@ class CommentsController extends Controller
             $tComment->user_id = $request->user()->id;
             $tComment->save();
 
-            return response('', 200);
+            return response(['message' => __('gallery.comment.add_success')], 200);
         }
 
-        return response('', 400);
+        return response(['message' => __('gallery.comment.add_fail')], 400);
     }
 
     /**
@@ -74,9 +74,9 @@ class CommentsController extends Controller
             $gestionDelete = new GestionDelete($request->user());
             $resultat = $gestionDelete->delComment($tComment);
 
-            if($resultat) return response(["message" => "OK"], 200);
+            if($resultat) return response(['message' => __('gallery.comment.del_success')], 200);
         }
 
-        return response(["message" => "NOK"], 400);
+        return response(["message" => __('gallery.comment.del_fail')], 400);
     }
 }

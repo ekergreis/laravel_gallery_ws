@@ -35,7 +35,7 @@ class GroupsController extends Controller
             }
         }
 
-        return response(["message" => "Le groupe a été créé"], 200);
+        return response(["message" => __('gallery.group.add_success')], 200);
     }
 
     /**
@@ -47,7 +47,7 @@ class GroupsController extends Controller
         $request->validated();
 
         Group::findOrFail($request->id)->delete();
-        return response(["message" => "Le groupe a été supprimé"], 200);
+        return response(["message" => __('gallery.group.del_success')], 200);
     }
 
 }

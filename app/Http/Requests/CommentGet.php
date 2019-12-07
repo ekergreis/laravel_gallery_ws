@@ -27,4 +27,11 @@ class CommentGet extends FormRequest
             'id' => 'required|integer|exists:comments,id',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'id.*' => __('gallery.comment.id_fail'),
+        ];
+    }
 }

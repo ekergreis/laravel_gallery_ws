@@ -37,4 +37,13 @@ class GaleriePost extends FormRequest
         }
         return $rules;
     }
+
+    public function messages()
+    {
+        return [
+            'name.unique' => __('gallery.galerie.doublon'),
+            'name.*' => __('gallery.galerie.invalid_name'),
+            'group.*.id.*' => __('gallery.group.id_fail'),
+        ];
+    }
 }

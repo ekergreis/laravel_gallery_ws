@@ -45,10 +45,10 @@ class LikesController extends Controller
             $tLike->user_id = $request->user()->id;
             $tLike->save();
 
-            return response(['message' => 'OK'], 200);
+            return response(['message' => __('gallery.like.add_success')], 200);
         }
 
-        return response(['message' => 'NOK'], 400);
+        return response(['message' => __('gallery.like.add_fail')], 400);
     }
 
     /**
@@ -65,9 +65,9 @@ class LikesController extends Controller
             $gestionDelete = new GestionDelete($request->user());
             $resultat = $gestionDelete->delLike($tLike);
 
-            if($resultat) return response(["message" => "OK"], 200);
+            if($resultat) return response(["message" => __('gallery.like.del_success')], 200);
         }
 
-        return response(["message" => "NOK"], 400);
+        return response(["message" => __('gallery.like.del_fail')], 400);
     }
 }

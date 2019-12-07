@@ -88,10 +88,10 @@ class GaleriesController extends Controller
             }
 
             Storage::disk('images')->makeDirectory($dirGalerie);
-            return response(["message" => "La galerie a été créée"], 200);
+            return response(["message" => __('gallery.galerie.add_success')], 200);
 
         } else {
-            return response(["message" => "Groupe invalide"], 400);
+            return response(["message" => __('gallery.galerie.add_fail')], 400);
         }
     }
 
@@ -109,9 +109,9 @@ class GaleriesController extends Controller
             $gestionDelete = new GestionDelete($request->user());
             $resultat = $gestionDelete->delGalerie($tGalerie);
 
-            if($resultat) return response(["message" => "OK"], 200);
+            if($resultat) return response(["message" => __('gallery.galerie.del_success')], 200);
         }
 
-        return response(["message" => "NOK"], 400);
+        return response(["message" => __('gallery.galerie.del_fail')], 400);
     }
 }
