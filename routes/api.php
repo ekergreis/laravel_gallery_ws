@@ -29,7 +29,6 @@ Route::namespace('api')->group(function () {
         Route::delete('galeries', 'GaleriesController@delGalerie')->name('auth.galerie_del');
         Route::delete('images', 'ImagesController@delImage')->name('auth.image_del');
         Route::delete('comments', 'CommentsController@delComment')->name('auth.comment_del');
-        Route::delete('like', 'LikesController@delLike')->name('auth.like_del');
 
         // [OAUTH] [ROLE] uniquement par un utilisateur admin
         Route::middleware('can:accessAdminpanel')->group(function() {

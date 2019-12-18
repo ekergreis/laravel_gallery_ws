@@ -60,6 +60,7 @@ class GestionDelete
             }
 
             //dump('Image : '.$tImage->id);
+            Storage::disk('images')->delete($tImage->galerie->path.'/small_'.$tImage->filename);
             Storage::disk('images')->delete($tImage->galerie->path.'/'.$tImage->filename);
             $tImage->delete();
 

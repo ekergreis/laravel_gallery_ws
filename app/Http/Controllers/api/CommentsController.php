@@ -27,10 +27,13 @@ class CommentsController extends Controller
         if($request->user()->canAccessImage($request->id)) {
             $tImage=Image::where('id', $request->id)->first();
             foreach($tImage->comment as $comment) {
+                $me=false;
+                if($request->user()->id == $comment->user_id) $me=true;
+
                 $tabMenu[]=['id' => $comment->id,
                             'comment' => $comment->comment,
-                            'like' => $comment->nb_like,
                             'create_by' => $comment->user->name,
+                            'create_by_me' => $me,
                             ];
             }
         }

@@ -16,58 +16,34 @@ class LikesController extends Controller
 {
     /**
     * Ajout like
-    * L'utilisateur indique qu'il aime une image ou un commentaire
-    * @bodyParam id_image integer required Identifiant de l'image (requis si id_comment non renseigné)
-    * @bodyParam id_comment integer required Identifiant du commentaire  (requis si id_image non renseigné)
+    * L'utilisateur indique qu'il aime ou n'aime plus une image
+    * @bodyParam id_image integer required Identifiant de l'image (requis)
     */
     public function setLike(LikePost $request)
     {
         $request->validated();
 
-        $idImage = null;
-        $idComment = null;
+        $idImage = $request->id_image;
+        if($request->user()->canAccessImage($idImage)) {
 
-        $authCreate = false;
-        if(!empty($request->id_image)) {
-            $idImage = $request->id_image;
-            $authCreate = $request->user()->canAccessImage($idImage);
-        } else {
-            if(!empty($request->id_comment)) {
-                $idComment = $request->id_comment;
-                $authCreate = $request->user()->canAccessComment($idComment);
+            $tLikes = Like::where('image_id', $idImage)->where('user_id', $request->user()->id)->get();
+            if($tLikes->count() == 0) {
+                $tLike = new Like();
+                $tLike->image_id = $idImage;
+                $tLike->user_id = $request->user()->id;
+                $tLike->save();
+
+                return response(['message' => __('gallery.like.add_success'), 'like' => true], 200);
+            } else {
+                $resultat = true;
+                foreach($tLikes as $tLike) {
+                    $gestionDelete = new GestionDelete($request->user());
+                    if(!$gestionDelete->delLike($tLike)) $resultat = false;
+                }
+                if($resultat) return response(["message" => __('gallery.like.del_success'), 'like' => false], 200);
             }
         }
 
-        if($authCreate) {
-            $tLike = new Like();
-            $tLike->image_id = $idImage;
-            $tLike->comment_id = $idComment;
-            $tLike->user_id = $request->user()->id;
-            $tLike->save();
-
-            return response(['message' => __('gallery.like.add_success')], 200);
-        }
-
         return response(['message' => __('gallery.like.add_fail')], 400);
-    }
-
-    /**
-    * Suppression like
-    * L'utilisateur annule son appréciation d'une image ou d'un commentaire
-    * @bodyParam id integer required Identifiant du like
-    */
-    public function delLike(LikeGet $request)
-    {
-        $request->validated();
-
-        $tLike=Like::where('id', $request->id)->first();
-        if($tLike) {
-            $gestionDelete = new GestionDelete($request->user());
-            $resultat = $gestionDelete->delLike($tLike);
-
-            if($resultat) return response(["message" => __('gallery.like.del_success')], 200);
-        }
-
-        return response(["message" => __('gallery.like.del_fail')], 400);
     }
 }

@@ -29,18 +29,18 @@ Welcome to the generated API reference.
 
 ```bash
 curl -X POST \
-    "http://localhost/api/login" \
+    "http://www.laravel_gallery.local/api/login" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"username":"expedita","password":"sunt","grant_type":"laborum","client_id":"2","client_secret":"Hs9Jmsx0HDeOE4p9cHNefrLRlZI4vSgrdnjWlDgk","scope":"eos"}'
+    -d '{"username":"est","password":"ullam","grant_type":"eum","client_id":"2","client_secret":"Hs9Jmsx0HDeOE4p9cHNefrLRlZI4vSgrdnjWlDgk","scope":"natus"}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/login"
+    "http://www.laravel_gallery.local/api/login"
 );
 
 let headers = {
@@ -51,12 +51,12 @@ let headers = {
 };
 
 let body = {
-    "username": "expedita",
-    "password": "sunt",
-    "grant_type": "laborum",
+    "username": "est",
+    "password": "ullam",
+    "grant_type": "eum",
     "client_id": "2",
     "client_secret": "Hs9Jmsx0HDeOE4p9cHNefrLRlZI4vSgrdnjWlDgk",
-    "scope": "eos"
+    "scope": "natus"
 }
 
 fetch(url, {
@@ -94,7 +94,7 @@ les informations des galeries, groupes et amis (utilisateurs ayant groupe en com
 
 ```bash
 curl -X GET \
-    -G "http://localhost/api/galeries" \
+    -G "http://www.laravel_gallery.local/api/galeries" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
@@ -103,7 +103,7 @@ curl -X GET \
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/galeries"
+    "http://www.laravel_gallery.local/api/galeries"
 );
 
 let headers = {
@@ -137,18 +137,18 @@ Liste des images accessibles dans une galerie
 
 ```bash
 curl -X GET \
-    -G "http://localhost/api/images" \
+    -G "http://www.laravel_gallery.local/api/images" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":5}'
+    -d '{"id":4}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/images"
+    "http://www.laravel_gallery.local/api/images"
 );
 
 let headers = {
@@ -159,7 +159,7 @@ let headers = {
 };
 
 let body = {
-    "id": 5
+    "id": 4
 }
 
 fetch(url, {
@@ -191,18 +191,18 @@ Les des commentaires renseignés pour une image
 
 ```bash
 curl -X GET \
-    -G "http://localhost/api/comments" \
+    -G "http://www.laravel_gallery.local/api/comments" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":11}'
+    -d '{"id":15}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/comments"
+    "http://www.laravel_gallery.local/api/comments"
 );
 
 let headers = {
@@ -213,7 +213,7 @@ let headers = {
 };
 
 let body = {
-    "id": 11
+    "id": 15
 }
 
 fetch(url, {
@@ -245,18 +245,18 @@ Enregistre une nouvelle galerie liée à un ou des groupes
 
 ```bash
 curl -X POST \
-    "http://localhost/api/galeries" \
+    "http://www.laravel_gallery.local/api/galeries" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"name":"Vacances","descript":"Nous sommes partis \u00e0 4...","date_start":"2019-07-01","date_end":"2019-07-20","group":[{"id":8}]}'
+    -d '{"name":"Vacances","descript":"Nous sommes partis \u00e0 4...","date_start":"2019-07-01","date_end":"2019-07-20","group":[{"id":18}]}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/galeries"
+    "http://www.laravel_gallery.local/api/galeries"
 );
 
 let headers = {
@@ -273,7 +273,7 @@ let body = {
     "date_end": "2019-07-20",
     "group": [
         {
-            "id": 8
+            "id": 18
         }
     ]
 }
@@ -311,18 +311,18 @@ Une image ne peut être ajoutée qu&#039;une fois dans une galerie (vérificatio
 
 ```bash
 curl -X POST \
-    "http://localhost/api/images" \
+    "http://www.laravel_gallery.local/api/images" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":19,"extension":"quae","data":"voluptatum"}'
+    -d '{"id":6,"extension":"ea","data":"eveniet"}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/images"
+    "http://www.laravel_gallery.local/api/images"
 );
 
 let headers = {
@@ -333,9 +333,9 @@ let headers = {
 };
 
 let body = {
-    "id": 19,
-    "extension": "quae",
-    "data": "voluptatum"
+    "id": 6,
+    "extension": "ea",
+    "data": "eveniet"
 }
 
 fetch(url, {
@@ -369,18 +369,18 @@ Un commentaire ne peut pas être re-créé à l&#039;identique par le même util
 
 ```bash
 curl -X POST \
-    "http://localhost/api/comments" \
+    "http://www.laravel_gallery.local/api/comments" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":11,"comment":"J'aime beaucoup cette photo"}'
+    -d '{"id":17,"comment":"J'aime beaucoup cette photo"}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/comments"
+    "http://www.laravel_gallery.local/api/comments"
 );
 
 let headers = {
@@ -391,7 +391,7 @@ let headers = {
 };
 
 let body = {
-    "id": 11,
+    "id": 17,
     "comment": "J'aime beaucoup cette photo"
 }
 
@@ -419,24 +419,24 @@ Parameter | Type | Status | Description
 
 <!-- START_56434bfd0ef62e3ac9e19ff33fa9cea3 -->
 ## Ajout like
-L&#039;utilisateur indique qu&#039;il aime une image ou un commentaire
+L&#039;utilisateur indique qu&#039;il aime ou n&#039;aime plus une image
 
 > Example request:
 
 ```bash
 curl -X POST \
-    "http://localhost/api/like" \
+    "http://www.laravel_gallery.local/api/like" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id_image":3,"id_comment":3}'
+    -d '{"id_image":9}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/like"
+    "http://www.laravel_gallery.local/api/like"
 );
 
 let headers = {
@@ -447,8 +447,7 @@ let headers = {
 };
 
 let body = {
-    "id_image": 3,
-    "id_comment": 3
+    "id_image": 9
 }
 
 fetch(url, {
@@ -468,8 +467,7 @@ fetch(url, {
 #### Body Parameters
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    `id_image` | integer |  required  | Identifiant de l'image (requis si id_comment non renseigné)
-        `id_comment` | integer |  required  | Identifiant du commentaire  (requis si id_image non renseigné)
+    `id_image` | integer |  required  | Identifiant de l'image (requis)
     
 <!-- END_56434bfd0ef62e3ac9e19ff33fa9cea3 -->
 
@@ -481,18 +479,18 @@ Seul un admin ou le créateur de la galerie peuvent supprimer une galerie
 
 ```bash
 curl -X DELETE \
-    "http://localhost/api/galeries" \
+    "http://www.laravel_gallery.local/api/galeries" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":2}'
+    -d '{"id":12}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/galeries"
+    "http://www.laravel_gallery.local/api/galeries"
 );
 
 let headers = {
@@ -503,7 +501,7 @@ let headers = {
 };
 
 let body = {
-    "id": 2
+    "id": 12
 }
 
 fetch(url, {
@@ -535,18 +533,18 @@ Seul un admin ou celui qui a ajouté l&#039;image peuvent la supprimer
 
 ```bash
 curl -X DELETE \
-    "http://localhost/api/images" \
+    "http://www.laravel_gallery.local/api/images" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":15}'
+    -d '{"id":9}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/images"
+    "http://www.laravel_gallery.local/api/images"
 );
 
 let headers = {
@@ -557,7 +555,7 @@ let headers = {
 };
 
 let body = {
-    "id": 15
+    "id": 9
 }
 
 fetch(url, {
@@ -589,18 +587,18 @@ Seul un admin ou celui qui a saisi le commentaire peuvent le supprimer
 
 ```bash
 curl -X DELETE \
-    "http://localhost/api/comments" \
+    "http://www.laravel_gallery.local/api/comments" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":16}'
+    -d '{"id":14}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/comments"
+    "http://www.laravel_gallery.local/api/comments"
 );
 
 let headers = {
@@ -611,7 +609,7 @@ let headers = {
 };
 
 let body = {
-    "id": 16
+    "id": 14
 }
 
 fetch(url, {
@@ -635,60 +633,6 @@ Parameter | Type | Status | Description
     
 <!-- END_0925c150c097d5864398c78c161ac599 -->
 
-<!-- START_63326b335cc4a8b6b22a146a65dcc8f5 -->
-## Suppression like
-L&#039;utilisateur annule son appréciation d&#039;une image ou d&#039;un commentaire
-
-> Example request:
-
-```bash
-curl -X DELETE \
-    "http://localhost/api/like" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "X-Requested-With: XMLHttpRequest" \
-    -H "Authorization: Bearer {token}" \
-    -d '{"id":3}'
-
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/api/like"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "X-Requested-With": "XMLHttpRequest",
-    "Authorization": "Bearer {token}",
-};
-
-let body = {
-    "id": 3
-}
-
-fetch(url, {
-    method: "DELETE",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-
-### HTTP Request
-`DELETE api/like`
-
-#### Body Parameters
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    `id` | integer |  required  | Identifiant du like
-    
-<!-- END_63326b335cc4a8b6b22a146a65dcc8f5 -->
-
 <!-- START_90f45d502fd52fdc0b289e55ba3c2ec6 -->
 ## Ajout utilisateur (admin)
 
@@ -696,18 +640,18 @@ Parameter | Type | Status | Description
 
 ```bash
 curl -X POST \
-    "http://localhost/api/signup" \
+    "http://www.laravel_gallery.local/api/signup" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"name":"eveniet","email":"aperiam","password":"impedit"}'
+    -d '{"name":"quia","email":"nemo","password":"dolores"}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/signup"
+    "http://www.laravel_gallery.local/api/signup"
 );
 
 let headers = {
@@ -718,9 +662,9 @@ let headers = {
 };
 
 let body = {
-    "name": "eveniet",
-    "email": "aperiam",
-    "password": "impedit"
+    "name": "quia",
+    "email": "nemo",
+    "password": "dolores"
 }
 
 fetch(url, {
@@ -754,18 +698,18 @@ Enregistre un nouveau groupe lié un ou des utilisateurs
 
 ```bash
 curl -X POST \
-    "http://localhost/api/groups" \
+    "http://www.laravel_gallery.local/api/groups" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"name":"Famille","usergroup":[{"id":13}]}'
+    -d '{"name":"Famille","usergroup":[{"id":7}]}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/groups"
+    "http://www.laravel_gallery.local/api/groups"
 );
 
 let headers = {
@@ -779,7 +723,7 @@ let body = {
     "name": "Famille",
     "usergroup": [
         {
-            "id": 13
+            "id": 7
         }
     ]
 }
@@ -813,18 +757,18 @@ Parameter | Type | Status | Description
 
 ```bash
 curl -X DELETE \
-    "http://localhost/api/groups" \
+    "http://www.laravel_gallery.local/api/groups" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":20}'
+    -d '{"id":15}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/groups"
+    "http://www.laravel_gallery.local/api/groups"
 );
 
 let headers = {
@@ -835,7 +779,7 @@ let headers = {
 };
 
 let body = {
-    "id": 20
+    "id": 15
 }
 
 fetch(url, {
@@ -867,7 +811,7 @@ Révocation du token
 
 ```bash
 curl -X GET \
-    -G "http://localhost/api/logout" \
+    -G "http://www.laravel_gallery.local/api/logout" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
@@ -876,7 +820,7 @@ curl -X GET \
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/logout"
+    "http://www.laravel_gallery.local/api/logout"
 );
 
 let headers = {

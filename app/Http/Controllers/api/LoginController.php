@@ -14,6 +14,8 @@ use Response;
 use Illuminate\Support\Carbon;
 use \Laravel\Passport\Http\Controllers\AccessTokenController as ATC;
 
+use App\Models\User;
+
 // [OAUTH] Class Login héritant de AccessTokenController de Passport
 class LoginController extends ATC
 {
@@ -45,6 +47,10 @@ class LoginController extends ATC
             $infosRet->put('access_token', $data['access_token']);
             $infosRet->put('token_type', 'Bearer');
             $infosRet->put('expires_at', Carbon::now()->addSeconds($data['expires_in']));
+
+            $username = $request->getParsedBody()['username'];
+            $user = User::where('email', $username)->first();
+            if($user) $infosRet->put('group', $user->role);
 
             return Response::json(array($infosRet)[0]);
         }

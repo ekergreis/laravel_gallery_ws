@@ -34,6 +34,7 @@ return [
     ],
     'image' => [
         'add_success' => 'Image ajoutée',
+        'add_trait_error' => 'Erreur traitement de l\'image',
         'add_fail_exist' => 'Image déjà existante dans la galerie',
         'add_fail' => 'Echec enregistrement image',
         'del_success' => 'Image supprimée',
@@ -52,12 +53,9 @@ return [
         'invalid' => 'Commentaire invalide',
     ],
     'like' => [
-        'add_success' => 'J\'aime',
-        'add_fail' => 'Echec enregistrement like',
-        'del_success' => 'Je n\'aime plus',
-        'del_fail' => 'Echec suppression like',
-        'id_fail' => 'Like introuvable',
-        'doublon' => 'Like déjà enregistré',
+        'add_success' => 'Like',
+        'add_fail' => 'Echec Like',
+        'del_success' => 'Not Like',
         'invalid' => 'Like invalide',
     ],
 ];

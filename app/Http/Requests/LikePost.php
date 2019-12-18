@@ -25,33 +25,15 @@ class LikePost extends FormRequest
      */
     public function rules()
     {
-        Validator::extend('uniqueLike', function ($attribute, $value, $parameters, $validator) {
-            if(empty($parameters[0]) && empty($parameters[1])) return false;
-
-            if(!empty($parameters[0]) && !empty($parameters[1]) && $value==$parameters[0]) return true;
-
-            if(empty($parameters[0])) $parameters[0]=null;
-            if(empty($parameters[1])) $parameters[1]=null;
-            $count = DB::table('likes')->where('comment_id', $parameters[0])
-                                        ->where('image_id', $parameters[1])
-                                        ->where('user_id', $parameters[2])
-                                        ->count();
-            return $count === 0;
-        });
-
         return [
-            'id_image' => 'integer|nullable|uniqueLike:'.$this->id_comment.','.$this->id_image.','.$this->user()->id,
-            'id_comment' => 'integer|nullable|uniqueLike:'.$this->id_comment.','.$this->id_image.','.$this->user()->id
+            'id_image' => 'integer|exists:images,id',
         ];
     }
 
     public function messages()
     {
         return [
-            'id_image.unique_like' => __('gallery.like.doublon'),
             'id_image.*' => __('gallery.like.invalid'),
-            'id_comment.unique_like' => __('gallery.like.doublon'),
-            'id_comment.*' => __('gallery.like.invalid'),
         ];
     }
 }

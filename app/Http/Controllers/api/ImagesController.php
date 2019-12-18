@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-use App\Classes\GestionDelete;
+use App\Classes\{GestionDelete, TraitementImages};
 use App\Http\Requests\ {GalerieGet, ImagePost, ImageGet};
 use App\Models\ {Galerie, Image};
 
@@ -30,6 +30,9 @@ class ImagesController extends Controller
         if($request->user()->canAccessGalerie($request->id)) {
             $tGalerie=Galerie::where('id', $request->id)->first();
             $tImages=$tGalerie->image()->get();
+            $tImages = $tImages->sortByDesc(function($image){
+                return $image->nb_like;
+            });
 
             $tabMenu['dir']=$tGalerie->path;
             foreach($tImages as $image) {
@@ -37,6 +40,7 @@ class ImagesController extends Controller
                         'filename' => $image->filename,
                         'comment_count' => $image->nb_comment,
                         'like_count' => $image->nb_like,
+                        'like_user' => $image->getUserLike($request->user()->id),
                         'create_by' => $image->user->name,
                         ];
             }
@@ -70,16 +74,20 @@ class ImagesController extends Controller
 
                     if(Storage::disk('images')->has($tGalerie->path.'/'.$nameImg)>0) {
                         if(Storage::disk('images')->size($tGalerie->path.'/'.$nameImg)>0) {
-                            $tImage = new Image();
-                            $tImage->galerie_id = $tGalerie->id;
-                            $tImage->filename = $nameImg;
-                            $tImage->checksum = $checksumImg;
-                            $tImage->user_id = $request->user()->id;
-                            $tImage->save();
+                            $traitImg = new TraitementImages();
+                            if($traitImg->creationMiniature(Storage::disk('images')->path($tGalerie->path), $nameImg, null, 200)) {
+                                $tImage = new Image();
+                                $tImage->galerie_id = $tGalerie->id;
+                                $tImage->filename = $nameImg;
+                                $tImage->checksum = $checksumImg;
+                                $tImage->user_id = $request->user()->id;
+                                $tImage->save();
 
-                            return response(["message" => __('gallery.image.add_success')], 200);
+                                return response(["message" => __('gallery.image.add_success')], 200);
+                            }
                         }
                     }
+                    return response(["message" => __('gallery.image.add_trait_error')], 400);
                 }
                 return response(["message" => __('gallery.image.add_fail_exist')], 400);
             }

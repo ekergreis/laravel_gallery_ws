@@ -4,6 +4,7 @@
 
 use Illuminate\Support\Str;
 
+use App\Classes\TraitementImages;
 use App\Models\Image;
 use App\Models\Galerie;
 use App\Models\User;
@@ -14,7 +15,9 @@ $factory->define(Image::class, function (Faker $faker) {
     if(App::runningUnitTests()) {
         $filename=Str::random(32);
     } else {
-        $filename=$faker->image('public/storage/galeries_images/'.$galerie->path,400,300, null, false);
+        $filename=$faker->image('public/storage/galeries_images/'.$galerie->path, 800, 600, null, false);
+        $traitImg = new TraitementImages();
+        $traitImg->creationMiniature('public/storage/galeries_images/'.$galerie->path, $filename, null, 200);
     }
 
     return [

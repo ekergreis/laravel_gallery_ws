@@ -46,15 +46,6 @@ class GalleryTablesSeeder extends Seeder
                 $like->save();
             }
         });
-        factory(Comment::class, 60)->create()->each(function ($comment) {
-            $faker = Faker\Factory::create();
-            $nbLike = $faker->numberBetween(0, User::all()->count());
-            for($indLike=0; $indLike < $nbLike; $indLike++) {
-                $like = new Like();
-                $like->comment_id = $comment->id;
-                $like->user_id = User::all()->random()->id;
-                $like->save();
-            }
-        });
+        factory(Comment::class, 60)->create();
     }
 }

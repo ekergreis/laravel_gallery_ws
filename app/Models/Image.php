@@ -26,4 +26,11 @@ class Image extends Model
     public function getNbLikeAttribute() {
         return $this->like->count();
     }
+    /**
+    * Identifier si un utilisateur a "liké" une image
+    * @return boolean
+    */
+    public function getUserLike($userId) {
+        return $this->like->where('user_id', $userId)->count() > 0 ? true : false;
+    }
 }
