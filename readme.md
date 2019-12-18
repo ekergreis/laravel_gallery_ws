@@ -7,7 +7,7 @@ __Documentation du web service : /docs/ (chemin complet : ./public/docs/)__
 - Les utilisateurs sont répartis par groupe pour pouvoir accéder aux galeries et images. 
 - Pour empêcher la récupération illicite d'images (par exemple en brute force), Les fichiers images de chaque galerie sont stockés dans un répertoire token, et, le nom du fichier image est également sous forme de token (chaine aléatoire de 32 caractéres). 
 - Des commentaires peuvent étre enregistrés pour les images. 
-- Des "likes" peuvent étre indiqués sur des images ou commentaires.
+- Des "likes" peuvent étre indiqués sur des images
 
 
 ### Récupération sources et installation :
