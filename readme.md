@@ -26,7 +26,7 @@ Des tests unitaires ont été réalisés (apis auth et galeries) et le code a é
     $ vendor/bin/phpunit
     $ php artisan code:analyse
 
-Le frontend réalisé en Vue.JS (Quasar) est en cours de développement.
+__Le frontend réalisé en Vue.JS (Quasar) est en cours de développement.
 Le projet est accessible sur GitHub : ["ekergreis/vue_gallery_frontend"](https://github.com/ekergreis/vue_gallery_frontend).__
 
 ![Galerie](https://raw.githubusercontent.com/ekergreis/vue_gallery_frontend/master/img/demo_galerie.png)
