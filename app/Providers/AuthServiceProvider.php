@@ -6,6 +6,7 @@ namespace App\Providers;
 use Laravel\Passport\Passport;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Classes\GestionUserInfos;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -33,12 +34,14 @@ class AuthServiceProvider extends ServiceProvider
 
         // [ROLE] Autorisation pour roles admin
         Gate::define('accessAdminpanel', function($user) {
-            return $user->role(['admin']);
+            $gestionUser = new GestionUserInfos($user);
+            return $gestionUser->CtrlRole(['admin']);
         });
 
          // [ROLE] Autorisation pour roles standard
         Gate::define('accessStandard', function($user) {
-            return $user->role(['standard', 'admin']);
+            $gestionUser = new GestionUserInfos($user);
+            return $gestionUser->CtrlRole(['standard', 'admin']);
         });
     }
 }

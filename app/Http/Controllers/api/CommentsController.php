@@ -8,7 +8,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 
-use App\Classes\GestionDelete;
+use App\Classes\ {GestionUserInfos, GestionDelete};
 use App\Http\Requests\ {ImageGet, CommentGet, CommentPost};
 use App\Models\ {Image, Comment};
 
@@ -22,13 +22,15 @@ class CommentsController extends Controller
     public function getComments(ImageGet $request)
     {
         $request->validated();
+        $gestionUser = new GestionUserInfos($request->user());
 
         $tabMenu=[];
-        if($request->user()->canAccessImage($request->id)) {
+
+        if($gestionUser->canAccessImage($request->id)) {
             $tImage=Image::where('id', $request->id)->first();
             foreach($tImage->comment as $comment) {
                 $me=false;
-                if($request->user()->id == $comment->user_id) $me=true;
+                if($gestionUser->user()->id == $comment->user_id) $me=true;
 
                 $tabMenu[]=['id' => $comment->id,
                             'comment' => $comment->comment,
@@ -49,12 +51,13 @@ class CommentsController extends Controller
     public function setComment(CommentPost $request)
     {
         $request->validated();
+        $gestionUser = new GestionUserInfos($request->user());
 
-        if($request->user()->canAccessImage($request->id)) {
+        if($gestionUser->canAccessImage($request->id)) {
             $tComment = new Comment();
             $tComment->image_id = $request->id;
             $tComment->comment = $request->comment;
-            $tComment->user_id = $request->user()->id;
+            $tComment->user_id = $gestionUser->user()->id;
             $tComment->save();
 
             return response(['message' => __('gallery.comment.add_success')], 200);

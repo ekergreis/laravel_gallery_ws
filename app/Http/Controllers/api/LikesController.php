@@ -8,7 +8,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 
-use App\Classes\GestionDelete;
+use App\Classes\ {GestionUserInfos, GestionDelete};
 use App\Http\Requests\ {LikePost, LikeGet};
 use App\Models\Like;
 
@@ -22,22 +22,26 @@ class LikesController extends Controller
     public function setLike(LikePost $request)
     {
         $request->validated();
+        $gestionUser = new GestionUserInfos($request->user());
 
         $idImage = $request->id_image;
-        if($request->user()->canAccessImage($idImage)) {
-
-            $tLikes = Like::where('image_id', $idImage)->where('user_id', $request->user()->id)->get();
+        // Si l'utilisateur connecté peut accéder à l'image
+        if($gestionUser->canAccessImage($idImage)) {
+            // Vérif si like existe
+            $tLikes = Like::where('image_id', $idImage)->where('user_id', $gestionUser->user()->id)->get();
             if($tLikes->count() == 0) {
+                // Like à activer
                 $tLike = new Like();
                 $tLike->image_id = $idImage;
-                $tLike->user_id = $request->user()->id;
+                $tLike->user_id = $gestionUser->user()->id;
                 $tLike->save();
 
                 return response(['message' => __('gallery.like.add_success'), 'like' => true], 200);
             } else {
+                // Like à désactiver
                 $resultat = true;
                 foreach($tLikes as $tLike) {
-                    $gestionDelete = new GestionDelete($request->user());
+                    $gestionDelete = new GestionDelete($gestionUser->user());
                     if(!$gestionDelete->delLike($tLike)) $resultat = false;
                 }
                 if($resultat) return response(["message" => __('gallery.like.del_success'), 'like' => false], 200);

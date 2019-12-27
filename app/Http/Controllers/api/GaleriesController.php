@@ -10,49 +10,72 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Carbon;
 
-use App\Classes\GestionDelete;
+use App\Classes\ {GestionUserInfos, GestionDelete};
 use App\Http\Requests\ {GaleriePost, GalerieGet};
-use App\Models\ {Group, Galerie};
+use App\Models\ {Group, Galerie, Image};
 
 class GaleriesController extends Controller
 {
     /**
     * Infos galeries
     * Retourne pour l'utilisateur connecté
-    * les informations des galeries, groupes et amis (utilisateurs ayant groupe en commun)
+    * les informations des galeries, groupes, podium best of images
     */
     public function getGaleries(Request $request)
     {
+        $gestionUser = new GestionUserInfos($request->user());
+
         $tabMenu = [];
 
-        $tabMenu['Util']=$request->user()->name;
+        // Récupération nom user connecté
+        $tabMenu['Util']=$gestionUser->user()->name;
 
+        // Récupération groupes accessibles par user connecté (pour création galerie)
         $tabMenu['Groups'] = [];
-        foreach($request->user()->group as $group) {
+        foreach($gestionUser->user()->group as $group) {
             $tabMenu['Groups'][]=['id' => $group->id,
                                 'name' => $group->name
                                 ];
         }
 
-        $tabMenu['Friends'] = [];
-        foreach($request->user()->getShareUser() as $shareUser) {
-            $tabMenu['Friends'][]=['id' => $shareUser->id,
-                                    'name' => $shareUser->name
-                                    ];
-        }
-
+        // Récupération des galeries accessibles
         $tabMenu['Galeries'] = [];
-        foreach($request->user()->getShareGalerie() as $galerie) {
+        $tabGalerieID = [];
+        foreach($gestionUser->getShareGalerie() as $galerie) {
+
+            $tabGalerieID[] = $galerie->id;
+
             $tabMenu['Galeries'][] = ['id' => $galerie->id,
                                     'name' => $galerie->name,
                                     'description' => $galerie->description,
                                     'count_images' => $galerie->nb_image,
-                                    'date_start' => $galerie->date_start,
-                                    'date_end' => $galerie->date_end,
-                                    'create_by' => $galerie->user->name
+                                    'date_start' => $galerie->date_start->format(config('gallery.date_format_export')),
+                                    'date_end' => $galerie->date_end->format(config('gallery.date_format_export')),
+                                    'create_by' => $galerie->user->name,
                                     ];
         }
+
+         // Récupération des images bestof dans galeries accessibles
+        $tabMenu['BestImgs'] = [];
+        $tImages = Image::whereIn('galerie_id', $tabGalerieID)->get();
+        $tImages = $tImages->sortByDesc(function($image) {
+            return $image->nb_like;
+        });
+        foreach($tImages as $image) {
+            $tabMenu['BestImgs'][] = ['id' => $image->id];
+            if(count($tabMenu['BestImgs']) == config('gallery.nb_best_img')) break;
+        }
+
+        /*
+        $tabMenu['Friends'] = [];
+        foreach($gestionUser->getShareUser() as $shareUser) {
+            $tabMenu['Friends'][]=['id' => $shareUser->id,
+                                    'name' => $shareUser->name
+                                    ];
+        }
+        */
 
         return response()->json($tabMenu);
     }
@@ -69,24 +92,29 @@ class GaleriesController extends Controller
     public function setGalerie(GaleriePost $request)
     {
         $request->validated();
+        $gestionUser = new GestionUserInfos($request->user());
 
-        $dirGalerie=Str::random(32);
+        // Génération nom dossier de la galerie à créer (token)
+        $dirGalerie=Str::random(config('gallery.dir_token_lenght'));
 
+        // Préparation enregistrement de la galerie
         $galerieAdd = new Galerie(['name' => $request->name,
                         'description' => $request->descript,
-                        'date_start' => $request->date_start,
-                        'date_end' => $request->date_end,
+                        'date_start' => Carbon::createFromFormat('Y-m-d', $request->date_start),
+                        'date_end' => Carbon::createFromFormat('Y-m-d', $request->date_end),
                         'path' => $dirGalerie,
-                        'user_id' => $request->user()->id,
+                        'user_id' => $gestionUser->user()->id,
                         ]);
 
-        $tabIDGroup = (collect($request->group)->pluck('id'));
-        if($request->user()->canShareWithGroup($tabIDGroup)) {
+        // Parcours des groupes affectés et création / liaison de la galerie
+        // Vérification si les id groupes sélectionnés sont accessibles
+        if($gestionUser->canShareWithGroup($request->group)) {
             foreach($request->group as $GroupInGalerie) {
                 Group::where('id', $GroupInGalerie['id'])->first()
                         ->galerie()->save($galerieAdd);
             }
 
+            // Création dossier de la galerie
             Storage::disk('images')->makeDirectory($dirGalerie);
             return response(["message" => __('gallery.galerie.add_success')], 200);
 
@@ -104,6 +132,7 @@ class GaleriesController extends Controller
     {
         $request->validated();
 
+        // Vérification existence de la galerie
         $tGalerie=Galerie::where('id', $request->id)->first();
         if($tGalerie) {
             $gestionDelete = new GestionDelete($request->user());

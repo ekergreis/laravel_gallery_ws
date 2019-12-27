@@ -24,7 +24,8 @@ class GroupPost extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|unique:groups'
+            'id' => 'required_without:name|integer|exists:groups,id',
+            'name' => 'required_without:id|string|unique:groups'
         ];
     }
 
@@ -33,6 +34,7 @@ class GroupPost extends FormRequest
         return [
             'name.unique' => __('gallery.group.doublon'),
             'name.*' => __('gallery.group.invalid_name'),
+            'id.*' => __('gallery.group.id_fail'),
         ];
     }
 }

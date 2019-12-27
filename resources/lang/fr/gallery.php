@@ -17,6 +17,8 @@ return [
     'group' => [
         'add_success' => 'Groupe ajouté',
         'add_fail' => 'Echec enregistrement groupe',
+        'del_user_success' => 'Utilisateur supprimé du groupe',
+        'del_user_fail' => 'Echec suppression utilisateur du groupe',
         'del_success' => 'Groupe supprimé',
         'del_fail' => 'Echec suppression groupe',
         'id_fail' => 'Groupe introuvable',

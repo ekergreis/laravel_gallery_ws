@@ -11,20 +11,25 @@ use Illuminate\Support\Facades\Storage;
 
 class GestionDelete
 {
-    private $user;
+    private $gestionUser;
+    /**
+     * Initialisation de la classe
+     * @param \App\Models\User $user
+     * @return bool
+     */
     public function __construct($user)
     {
-        $this->user = $user;
+        $this->gestionUser = new GestionUserInfos($user);
     }
 
     /**
      * Supprimer une galerie
-     * @param collection galerie
+     * @param \App\Models\Galerie $tGalerie
      * @return bool
      */
     public function delGalerie($tGalerie)
     {
-        if($tGalerie->user_id == $this->user->id || $this->user->role('admin')) {
+        if($tGalerie->user_id == $this->gestionUser->user()->id || $this->gestionUser->CtrlRole('admin')) {
             $tImages=$tGalerie->image()->get();
             foreach($tImages as $tImage) {
                 $this->delImage($tImage, true);
@@ -41,13 +46,13 @@ class GestionDelete
 
     /**
      * Supprimer une image
-     * @param collection image
-     * @param boolean indique si la suppression est déclenché à un niveau supérieur (galerie)
+     * @param \App\Models\Image $tImage
+     * @param boolean $supprCascade Indicateur suppression déclenchée à un niveau supérieur (galerie)
      * @return bool
      */
     public function delImage($tImage, $supprCascade=false)
     {
-        if($supprCascade || $tImage->user_id == $this->user->id || $this->user->role('admin')) {
+        if($supprCascade || $tImage->user_id == $this->gestionUser->user()->id || $this->gestionUser->CtrlRole('admin')) {
 
             $tComments=$tImage->comment()->get();
             foreach($tComments as $tComment) {
@@ -71,19 +76,13 @@ class GestionDelete
 
     /**
      * Supprimer un commentaire
-     * @param collection commentaire
-     * @param boolean indique si la suppression est déclenché à un niveau supérieur (image)
+     * @param \App\Models\Comment $tComment
+     * @param boolean $supprCascade Indicateur suppression déclenchée à un niveau supérieur (image)
      * @return bool
      */
     public function delComment($tComment, $supprCascade=false)
     {
-        if($supprCascade || $tComment->user_id == $this->user->id || $this->user->role('admin')) {
-
-            $tLikes=$tComment->like()->get();
-            foreach($tLikes as $tLike) {
-                $this->delLike($tLike, true);
-            }
-
+        if($supprCascade || $tComment->user_id == $this->gestionUser->user()->id || $this->gestionUser->CtrlRole('admin')) {
             //dump('Comment : '.$tComment->id);
             $tComment->delete();
 
@@ -94,13 +93,13 @@ class GestionDelete
 
     /**
      * Supprimer un like
-     * @param collection commentaire
-     * @param boolean indique si la suppression est déclenché à un niveau supérieur (image)
+     * @param \App\Models\Like $tLike
+     * @param boolean $supprCascade Indicateur suppression déclenchée à un niveau supérieur (image)
      * @return bool
      */
     public function delLike($tLike, $supprCascade=false)
     {
-        if($supprCascade || $tLike->user_id == $this->user->id || $this->user->role('admin')) {
+        if($supprCascade || $tLike->user_id == $this->gestionUser->user()->id || $this->gestionUser->CtrlRole('admin')) {
             //dump('Like : '.$tLike->id);
             $tLike->delete();
 

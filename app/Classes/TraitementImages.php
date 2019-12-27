@@ -12,9 +12,13 @@ use Intervention\Image\Exception\NotReadableException;
 
 class TraitementImages
 {
-    public function creationMiniature($path, $imageName, $width, $height)
+    public function creationMiniature($path, $imageName)
     {
-         //re-dimensioner pour miniature hauteur fixée à 250px largeur auto (ratio)
+        //re-dimensioner pour miniature hauteur fixée dans config/gallery.php
+        $width = config('gallery.miniature_width');
+        $height = config('gallery.miniature_height');
+        $prefixeName = config('gallery.miniature_prefixe_name');
+
         try {
             $img = Image::make($path.'/'.$imageName);
         }
@@ -24,7 +28,7 @@ class TraitementImages
         $img->resize($width, $height, function ($constraint) {
             $constraint->aspectRatio();
         });
-        $img->orientate()->save($path.'/small_'.$imageName);
+        $img->orientate()->save($path.'/'.$prefixeName.$imageName);
 
         return true;
     }

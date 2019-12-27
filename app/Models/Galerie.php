@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Galerie extends Model
 {
     protected $fillable = ['name', 'description', 'date_start', 'date_end', 'path', 'user_id'];
+    protected $dates = ['date_start', 'date_end'];
 
     public function group()
     {

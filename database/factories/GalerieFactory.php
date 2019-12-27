@@ -13,7 +13,7 @@ use App\Models\User;
 $factory->define(Galerie::class, function (Faker $faker) {
     $dateDeb = $faker->dateTimeBetween('-3 years', 'now');
     $dateFin = $faker->dateTimeInInterval($dateDeb, '45 days');
-    $directory = Str::random(32);
+    $directory = Str::random(config('gallery.dir_token_lenght'));
     if(!App::runningUnitTests()) {
         Storage::disk('images')->makeDirectory($directory);
     }

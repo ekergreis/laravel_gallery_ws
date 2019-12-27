@@ -32,7 +32,7 @@ class GaleriePost extends FormRequest
         ];
         if(!empty($this->request->get('group'))) {
             foreach($this->request->get('group') as $key => $val) {
-                $rules['group.'.$key.'.id'] = 'integer|exists:groups,id';
+                $rules['group.'.$key.'.id'] = 'required|integer|exists:groups,id';
             }
         }
         return $rules;

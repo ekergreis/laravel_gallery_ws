@@ -24,7 +24,8 @@ class GalerieGet extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|integer|exists:galeries,id',
+            'id' => 'required_without:img|integer|exists:galeries,id',
+            'img.*.id' => 'required_without:id|integer',
         ];
     }
 
@@ -32,6 +33,7 @@ class GalerieGet extends FormRequest
     {
         return [
             'id.*' => __('gallery.galerie.id_fail'),
+            'img.*.id.*' => __('gallery.image.id_fail'),
         ];
     }
 }

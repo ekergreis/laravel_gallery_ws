@@ -59,7 +59,7 @@
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"username":"est","password":"ullam","grant_type":"eum","client_id":"2","client_secret":"Hs9Jmsx0HDeOE4p9cHNefrLRlZI4vSgrdnjWlDgk","scope":"natus"}'
+    -d '{"username":"dolorum","password":"vero","grant_type":"tempora","client_id":"2","client_secret":"Hs9Jmsx0HDeOE4p9cHNefrLRlZI4vSgrdnjWlDgk","scope":"inventore"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
     "http://www.laravel_gallery.local/api/login"
@@ -73,12 +73,12 @@ let headers = {
 };
 
 let body = {
-    "username": "est",
-    "password": "ullam",
-    "grant_type": "eum",
+    "username": "dolorum",
+    "password": "vero",
+    "grant_type": "tempora",
     "client_id": "2",
     "client_secret": "Hs9Jmsx0HDeOE4p9cHNefrLRlZI4vSgrdnjWlDgk",
-    "scope": "natus"
+    "scope": "inventore"
 }
 
 fetch(url, {
@@ -143,7 +143,7 @@ fetch(url, {
 <!-- START_e0a641c96191824651592e4d848d5068 -->
 <h2>Infos galeries</h2>
 <p>Retourne pour l&#039;utilisateur connecté
-les informations des galeries, groupes et amis (utilisateurs ayant groupe en commun)</p>
+les informations des galeries, groupes, podium best of images</p>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
@@ -173,19 +173,19 @@ fetch(url, {
 <h3>HTTP Request</h3>
 <p><code>GET api/galeries</code></p>
 <!-- END_e0a641c96191824651592e4d848d5068 -->
-<!-- START_8e05289fc079261819c2c145f89215f1 -->
+<!-- START_204613676cab89a55dfdc7d81f16a281 -->
 <h2>Infos images</h2>
 <p>Liste des images accessibles dans une galerie</p>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
-<pre><code class="language-bash">curl -X GET \
-    -G "http://www.laravel_gallery.local/api/images" \
+<pre><code class="language-bash">curl -X POST \
+    "http://www.laravel_gallery.local/api/images" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":4}'
+    -d '{"id":12,"img":[{"id":11}]}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
     "http://www.laravel_gallery.local/api/images"
@@ -199,18 +199,23 @@ let headers = {
 };
 
 let body = {
-    "id": 4
+    "id": 12,
+    "img": [
+        {
+            "id": 11
+        }
+    ]
 }
 
 fetch(url, {
-    method: "GET",
+    method: "POST",
     headers: headers,
     body: body
 })
     .then(response =&gt; response.json())
     .then(json =&gt; console.log(json));</code></pre>
 <h3>HTTP Request</h3>
-<p><code>GET api/images</code></p>
+<p><code>POST api/images</code></p>
 <h4>Body Parameters</h4>
 <table>
 <thead>
@@ -226,11 +231,17 @@ fetch(url, {
 <td><code>id</code></td>
 <td>integer</td>
 <td>required</td>
-<td>Identifiant de la galerie</td>
+<td>Identifiant de la galerie. Requis si aucun id image</td>
+</tr>
+<tr>
+<td><code>img.*.id</code></td>
+<td>integer</td>
+<td>required</td>
+<td>identifiants des images à afficher (pour best of)</td>
 </tr>
 </tbody>
 </table>
-<!-- END_8e05289fc079261819c2c145f89215f1 -->
+<!-- END_204613676cab89a55dfdc7d81f16a281 -->
 <!-- START_38702aa9c6f225b36ff53e89358992ea -->
 <h2>Infos commentaires</h2>
 <p>Les des commentaires renseignés pour une image</p>
@@ -243,7 +254,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":15}'
+    -d '{"id":3}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
     "http://www.laravel_gallery.local/api/comments"
@@ -257,7 +268,7 @@ let headers = {
 };
 
 let body = {
-    "id": 15
+    "id": 3
 }
 
 fetch(url, {
@@ -301,7 +312,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"name":"Vacances","descript":"Nous sommes partis \u00e0 4...","date_start":"2019-07-01","date_end":"2019-07-20","group":[{"id":18}]}'
+    -d '{"name":"Vacances","descript":"Nous sommes partis \u00e0 4...","date_start":"2019-07-01","date_end":"2019-07-20","group":[{"id":2}]}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
     "http://www.laravel_gallery.local/api/galeries"
@@ -321,7 +332,7 @@ let body = {
     "date_end": "2019-07-20",
     "group": [
         {
-            "id": 18
+            "id": 2
         }
     ]
 }
@@ -379,22 +390,22 @@ fetch(url, {
 </tbody>
 </table>
 <!-- END_7eaf5f4930153c54f919812f213a994c -->
-<!-- START_204613676cab89a55dfdc7d81f16a281 -->
+<!-- START_10ec29912adcd2d1dca83504286a7769 -->
 <h2>Ajout image</h2>
 <p>Une image ne peut être ajoutée qu&#039;une fois dans une galerie (vérification doublon par checksum)</p>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-bash">curl -X POST \
-    "http://www.laravel_gallery.local/api/images" \
+    "http://www.laravel_gallery.local/api/image_upload" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":6,"extension":"ea","data":"eveniet"}'
+    -d '{"id":17,"extension":"repellendus","data":"qui"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
-    "http://www.laravel_gallery.local/api/images"
+    "http://www.laravel_gallery.local/api/image_upload"
 );
 
 let headers = {
@@ -405,9 +416,9 @@ let headers = {
 };
 
 let body = {
-    "id": 6,
-    "extension": "ea",
-    "data": "eveniet"
+    "id": 17,
+    "extension": "repellendus",
+    "data": "qui"
 }
 
 fetch(url, {
@@ -418,7 +429,7 @@ fetch(url, {
     .then(response =&gt; response.json())
     .then(json =&gt; console.log(json));</code></pre>
 <h3>HTTP Request</h3>
-<p><code>POST api/images</code></p>
+<p><code>POST api/image_upload</code></p>
 <h4>Body Parameters</h4>
 <table>
 <thead>
@@ -450,7 +461,7 @@ fetch(url, {
 </tr>
 </tbody>
 </table>
-<!-- END_204613676cab89a55dfdc7d81f16a281 -->
+<!-- END_10ec29912adcd2d1dca83504286a7769 -->
 <!-- START_6c560cb463cae69ddba197afa896608b -->
 <h2>Ajout commentaire</h2>
 <p>Un commentaire ne peut pas être re-créé à l&#039;identique par le même utilisateur pour la même image</p>
@@ -463,7 +474,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":17,"comment":"J'aime beaucoup cette photo"}'
+    -d '{"id":6,"comment":"J'aime beaucoup cette photo"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
     "http://www.laravel_gallery.local/api/comments"
@@ -477,7 +488,7 @@ let headers = {
 };
 
 let body = {
-    "id": 17,
+    "id": 6,
     "comment": "J'aime beaucoup cette photo"
 }
 
@@ -528,7 +539,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id_image":9}'
+    -d '{"id_image":13}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
     "http://www.laravel_gallery.local/api/like"
@@ -542,7 +553,7 @@ let headers = {
 };
 
 let body = {
-    "id_image": 9
+    "id_image": 13
 }
 
 fetch(url, {
@@ -586,7 +597,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":12}'
+    -d '{"id":13}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
     "http://www.laravel_gallery.local/api/galeries"
@@ -600,7 +611,7 @@ let headers = {
 };
 
 let body = {
-    "id": 12
+    "id": 13
 }
 
 fetch(url, {
@@ -644,7 +655,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":9}'
+    -d '{"id":17}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
     "http://www.laravel_gallery.local/api/images"
@@ -658,7 +669,7 @@ let headers = {
 };
 
 let body = {
-    "id": 9
+    "id": 17
 }
 
 fetch(url, {
@@ -702,7 +713,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":14}'
+    -d '{"id":15}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
     "http://www.laravel_gallery.local/api/comments"
@@ -716,7 +727,7 @@ let headers = {
 };
 
 let body = {
-    "id": 14
+    "id": 15
 }
 
 fetch(url, {
@@ -759,7 +770,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"name":"quia","email":"nemo","password":"dolores"}'
+    -d '{"name":"illum","email":"nobis","password":"eius"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
     "http://www.laravel_gallery.local/api/signup"
@@ -773,9 +784,9 @@ let headers = {
 };
 
 let body = {
-    "name": "quia",
-    "email": "nemo",
-    "password": "dolores"
+    "name": "illum",
+    "email": "nobis",
+    "password": "eius"
 }
 
 fetch(url, {
@@ -819,9 +830,41 @@ fetch(url, {
 </tbody>
 </table>
 <!-- END_90f45d502fd52fdc0b289e55ba3c2ec6 -->
+<!-- START_007018a8a9f15c2d47fcb105431ffeee -->
+<h2>Infos user et groupes (admin)</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET \
+    -G "http://www.laravel_gallery.local/api/groups" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -H "X-Requested-With: XMLHttpRequest" \
+    -H "Authorization: Bearer {token}"</code></pre>
+<pre><code class="language-javascript">const url = new URL(
+    "http://www.laravel_gallery.local/api/groups"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
+    "Authorization": "Bearer {token}",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/groups</code></p>
+<!-- END_007018a8a9f15c2d47fcb105431ffeee -->
 <!-- START_15c22564ad248f952405021410fd1d25 -->
 <h2>Ajout groupe (admin)</h2>
-<p>Enregistre un nouveau groupe lié un ou des utilisateurs</p>
+<p>Enregistre un nouveau groupe lié un ou des utilisateurs
+Ou affecte un ou des utilisateurs à un groupe existant</p>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
@@ -831,7 +874,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"name":"Famille","usergroup":[{"id":7}]}'
+    -d '{"id":"qui","name":"Famille","usergroup":[{"id":16}]}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
     "http://www.laravel_gallery.local/api/groups"
@@ -845,10 +888,11 @@ let headers = {
 };
 
 let body = {
+    "id": "qui",
     "name": "Famille",
     "usergroup": [
         {
-            "id": 7
+            "id": 16
         }
     ]
 }
@@ -874,10 +918,16 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
+<td><code>id</code></td>
+<td>string</td>
+<td>required</td>
+<td>Id du groupe. Requis sans name</td>
+</tr>
+<tr>
 <td><code>name</code></td>
 <td>string</td>
 <td>required</td>
-<td>Libellé du groupe.</td>
+<td>Libellé du groupe. Requis sans Id.</td>
 </tr>
 <tr>
 <td><code>usergroup.*.id</code></td>
@@ -888,6 +938,74 @@ fetch(url, {
 </tbody>
 </table>
 <!-- END_15c22564ad248f952405021410fd1d25 -->
+<!-- START_797bc72d26115689bba2441f6d653d63 -->
+<h2>Suppression user d&#039;un groupe (admin)</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X DELETE \
+    "http://www.laravel_gallery.local/api/groups_user" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -H "X-Requested-With: XMLHttpRequest" \
+    -H "Authorization: Bearer {token}" \
+    -d '{"id":8,"usergroup":[{"id":10}]}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL(
+    "http://www.laravel_gallery.local/api/groups_user"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
+    "Authorization": "Bearer {token}",
+};
+
+let body = {
+    "id": 8,
+    "usergroup": [
+        {
+            "id": 10
+        }
+    ]
+}
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<h3>HTTP Request</h3>
+<p><code>DELETE api/groups_user</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>integer</td>
+<td>required</td>
+<td>Identifiant du groupe à supprimer.</td>
+</tr>
+<tr>
+<td><code>usergroup.*.id</code></td>
+<td>integer</td>
+<td>optional</td>
+<td>Identifiants des utilisateurs à supprimer du groupe</td>
+</tr>
+</tbody>
+</table>
+<!-- END_797bc72d26115689bba2441f6d653d63 -->
 <!-- START_bf71323292c0b1468b4e5e727c154962 -->
 <h2>Suppression groupe (admin)</h2>
 <blockquote>

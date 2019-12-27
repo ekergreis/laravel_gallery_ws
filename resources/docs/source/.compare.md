@@ -34,7 +34,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"username":"est","password":"ullam","grant_type":"eum","client_id":"2","client_secret":"Hs9Jmsx0HDeOE4p9cHNefrLRlZI4vSgrdnjWlDgk","scope":"natus"}'
+    -d '{"username":"dolorum","password":"vero","grant_type":"tempora","client_id":"2","client_secret":"Hs9Jmsx0HDeOE4p9cHNefrLRlZI4vSgrdnjWlDgk","scope":"inventore"}'
 
 ```
 
@@ -51,12 +51,12 @@ let headers = {
 };
 
 let body = {
-    "username": "est",
-    "password": "ullam",
-    "grant_type": "eum",
+    "username": "dolorum",
+    "password": "vero",
+    "grant_type": "tempora",
     "client_id": "2",
     "client_secret": "Hs9Jmsx0HDeOE4p9cHNefrLRlZI4vSgrdnjWlDgk",
-    "scope": "natus"
+    "scope": "inventore"
 }
 
 fetch(url, {
@@ -88,7 +88,7 @@ Parameter | Type | Status | Description
 <!-- START_e0a641c96191824651592e4d848d5068 -->
 ## Infos galeries
 Retourne pour l&#039;utilisateur connecté
-les informations des galeries, groupes et amis (utilisateurs ayant groupe en commun)
+les informations des galeries, groupes, podium best of images
 
 > Example request:
 
@@ -129,20 +129,20 @@ fetch(url, {
 
 <!-- END_e0a641c96191824651592e4d848d5068 -->
 
-<!-- START_8e05289fc079261819c2c145f89215f1 -->
+<!-- START_204613676cab89a55dfdc7d81f16a281 -->
 ## Infos images
 Liste des images accessibles dans une galerie
 
 > Example request:
 
 ```bash
-curl -X GET \
-    -G "http://www.laravel_gallery.local/api/images" \
+curl -X POST \
+    "http://www.laravel_gallery.local/api/images" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":4}'
+    -d '{"id":12,"img":[{"id":11}]}'
 
 ```
 
@@ -159,11 +159,16 @@ let headers = {
 };
 
 let body = {
-    "id": 4
+    "id": 12,
+    "img": [
+        {
+            "id": 11
+        }
+    ]
 }
 
 fetch(url, {
-    method: "GET",
+    method: "POST",
     headers: headers,
     body: body
 })
@@ -174,14 +179,15 @@ fetch(url, {
 
 
 ### HTTP Request
-`GET api/images`
+`POST api/images`
 
 #### Body Parameters
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    `id` | integer |  required  | Identifiant de la galerie
+    `id` | integer |  required  | Identifiant de la galerie. Requis si aucun id image
+        `img.*.id` | integer |  required  | identifiants des images à afficher (pour best of)
     
-<!-- END_8e05289fc079261819c2c145f89215f1 -->
+<!-- END_204613676cab89a55dfdc7d81f16a281 -->
 
 <!-- START_38702aa9c6f225b36ff53e89358992ea -->
 ## Infos commentaires
@@ -196,7 +202,7 @@ curl -X GET \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":15}'
+    -d '{"id":3}'
 
 ```
 
@@ -213,7 +219,7 @@ let headers = {
 };
 
 let body = {
-    "id": 15
+    "id": 3
 }
 
 fetch(url, {
@@ -250,7 +256,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"name":"Vacances","descript":"Nous sommes partis \u00e0 4...","date_start":"2019-07-01","date_end":"2019-07-20","group":[{"id":18}]}'
+    -d '{"name":"Vacances","descript":"Nous sommes partis \u00e0 4...","date_start":"2019-07-01","date_end":"2019-07-20","group":[{"id":2}]}'
 
 ```
 
@@ -273,7 +279,7 @@ let body = {
     "date_end": "2019-07-20",
     "group": [
         {
-            "id": 18
+            "id": 2
         }
     ]
 }
@@ -303,7 +309,7 @@ Parameter | Type | Status | Description
     
 <!-- END_7eaf5f4930153c54f919812f213a994c -->
 
-<!-- START_204613676cab89a55dfdc7d81f16a281 -->
+<!-- START_10ec29912adcd2d1dca83504286a7769 -->
 ## Ajout image
 Une image ne peut être ajoutée qu&#039;une fois dans une galerie (vérification doublon par checksum)
 
@@ -311,18 +317,18 @@ Une image ne peut être ajoutée qu&#039;une fois dans une galerie (vérificatio
 
 ```bash
 curl -X POST \
-    "http://www.laravel_gallery.local/api/images" \
+    "http://www.laravel_gallery.local/api/image_upload" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":6,"extension":"ea","data":"eveniet"}'
+    -d '{"id":17,"extension":"repellendus","data":"qui"}'
 
 ```
 
 ```javascript
 const url = new URL(
-    "http://www.laravel_gallery.local/api/images"
+    "http://www.laravel_gallery.local/api/image_upload"
 );
 
 let headers = {
@@ -333,9 +339,9 @@ let headers = {
 };
 
 let body = {
-    "id": 6,
-    "extension": "ea",
-    "data": "eveniet"
+    "id": 17,
+    "extension": "repellendus",
+    "data": "qui"
 }
 
 fetch(url, {
@@ -350,7 +356,7 @@ fetch(url, {
 
 
 ### HTTP Request
-`POST api/images`
+`POST api/image_upload`
 
 #### Body Parameters
 Parameter | Type | Status | Description
@@ -359,7 +365,7 @@ Parameter | Type | Status | Description
         `extension` | string |  required  | Extension du fichier image (limitée aux formats : jpg, jpeg, png)
         `data` | string |  required  | Image encodée en base64
     
-<!-- END_204613676cab89a55dfdc7d81f16a281 -->
+<!-- END_10ec29912adcd2d1dca83504286a7769 -->
 
 <!-- START_6c560cb463cae69ddba197afa896608b -->
 ## Ajout commentaire
@@ -374,7 +380,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":17,"comment":"J'aime beaucoup cette photo"}'
+    -d '{"id":6,"comment":"J'aime beaucoup cette photo"}'
 
 ```
 
@@ -391,7 +397,7 @@ let headers = {
 };
 
 let body = {
-    "id": 17,
+    "id": 6,
     "comment": "J'aime beaucoup cette photo"
 }
 
@@ -430,7 +436,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id_image":9}'
+    -d '{"id_image":13}'
 
 ```
 
@@ -447,7 +453,7 @@ let headers = {
 };
 
 let body = {
-    "id_image": 9
+    "id_image": 13
 }
 
 fetch(url, {
@@ -484,7 +490,7 @@ curl -X DELETE \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":12}'
+    -d '{"id":13}'
 
 ```
 
@@ -501,7 +507,7 @@ let headers = {
 };
 
 let body = {
-    "id": 12
+    "id": 13
 }
 
 fetch(url, {
@@ -538,7 +544,7 @@ curl -X DELETE \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":9}'
+    -d '{"id":17}'
 
 ```
 
@@ -555,7 +561,7 @@ let headers = {
 };
 
 let body = {
-    "id": 9
+    "id": 17
 }
 
 fetch(url, {
@@ -592,7 +598,7 @@ curl -X DELETE \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":14}'
+    -d '{"id":15}'
 
 ```
 
@@ -609,7 +615,7 @@ let headers = {
 };
 
 let body = {
-    "id": 14
+    "id": 15
 }
 
 fetch(url, {
@@ -645,7 +651,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"name":"quia","email":"nemo","password":"dolores"}'
+    -d '{"name":"illum","email":"nobis","password":"eius"}'
 
 ```
 
@@ -662,9 +668,9 @@ let headers = {
 };
 
 let body = {
-    "name": "quia",
-    "email": "nemo",
-    "password": "dolores"
+    "name": "illum",
+    "email": "nobis",
+    "password": "eius"
 }
 
 fetch(url, {
@@ -690,9 +696,52 @@ Parameter | Type | Status | Description
     
 <!-- END_90f45d502fd52fdc0b289e55ba3c2ec6 -->
 
+<!-- START_007018a8a9f15c2d47fcb105431ffeee -->
+## Infos user et groupes (admin)
+
+> Example request:
+
+```bash
+curl -X GET \
+    -G "http://www.laravel_gallery.local/api/groups" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -H "X-Requested-With: XMLHttpRequest" \
+    -H "Authorization: Bearer {token}"
+```
+
+```javascript
+const url = new URL(
+    "http://www.laravel_gallery.local/api/groups"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
+    "Authorization": "Bearer {token}",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+
+### HTTP Request
+`GET api/groups`
+
+
+<!-- END_007018a8a9f15c2d47fcb105431ffeee -->
+
 <!-- START_15c22564ad248f952405021410fd1d25 -->
 ## Ajout groupe (admin)
 Enregistre un nouveau groupe lié un ou des utilisateurs
+Ou affecte un ou des utilisateurs à un groupe existant
 
 > Example request:
 
@@ -703,7 +752,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"name":"Famille","usergroup":[{"id":7}]}'
+    -d '{"id":"qui","name":"Famille","usergroup":[{"id":16}]}'
 
 ```
 
@@ -720,10 +769,11 @@ let headers = {
 };
 
 let body = {
+    "id": "qui",
     "name": "Famille",
     "usergroup": [
         {
-            "id": 7
+            "id": 16
         }
     ]
 }
@@ -745,10 +795,70 @@ fetch(url, {
 #### Body Parameters
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    `name` | string |  required  | Libellé du groupe.
+    `id` | string |  required  | Id du groupe. Requis sans name
+        `name` | string |  required  | Libellé du groupe. Requis sans Id.
         `usergroup.*.id` | integer |  optional  | Identifiants des utilisateurs autorisés à accéder au groupe
     
 <!-- END_15c22564ad248f952405021410fd1d25 -->
+
+<!-- START_797bc72d26115689bba2441f6d653d63 -->
+## Suppression user d&#039;un groupe (admin)
+
+> Example request:
+
+```bash
+curl -X DELETE \
+    "http://www.laravel_gallery.local/api/groups_user" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -H "X-Requested-With: XMLHttpRequest" \
+    -H "Authorization: Bearer {token}" \
+    -d '{"id":8,"usergroup":[{"id":10}]}'
+
+```
+
+```javascript
+const url = new URL(
+    "http://www.laravel_gallery.local/api/groups_user"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
+    "Authorization": "Bearer {token}",
+};
+
+let body = {
+    "id": 8,
+    "usergroup": [
+        {
+            "id": 10
+        }
+    ]
+}
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+
+### HTTP Request
+`DELETE api/groups_user`
+
+#### Body Parameters
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    `id` | integer |  required  | Identifiant du groupe à supprimer.
+        `usergroup.*.id` | integer |  optional  | Identifiants des utilisateurs à supprimer du groupe
+    
+<!-- END_797bc72d26115689bba2441f6d653d63 -->
 
 <!-- START_bf71323292c0b1468b4e5e727c154962 -->
 ## Suppression groupe (admin)

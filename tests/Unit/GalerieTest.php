@@ -6,22 +6,25 @@
 * POST Mauvaise authentification => FAIL 401
 * POST Authentifié création galerie => SUCCESS 200
 * POST Authentifié galerie en doublon => FAIL 422
-* POST Authentifié user non autorisé pour groupe  => FAIL 422
+* POST Authentifié user non autorisé pour groupe  => FAIL 400
 * POST Authentifié user dates invalides => FAIL 422
 * POST Authentifié groupe non renseigné => FAIL 422
 * DELETE Mauvaise authentification => FAIL 401
 * DELETE Authentifié id autorisé => SUCCESS 200
-* DELETE Authentifié id non autorisé => FAIL 422
+* DELETE Authentifié id non autorisé => FAIL 400
 * DELETE Authentifié aucun id => FAIL 422
 */
 
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use App\Classes\GestionUserInfos;
 use App\Models\ {User, Group, Galerie};
 
 class GalerieTest extends TestCase
 {
+
+
     public function testGetGalerieBadAuth() {
         $reponse = $this->json('get', 'api/galeries');
         $reponse->assertStatus(401);
@@ -34,7 +37,7 @@ class GalerieTest extends TestCase
         $reponse->assertJsonStructure([
             'Util',
             'Groups' => [ '*' => ['id', 'name']],
-            'Friends' => [ '*' => ['id', 'name']],
+            // 'Friends' => [ '*' => ['id', 'name']],
             'Galeries' => [ '*' => ['id', 'name', 'description', 'count_images', 'date_start', 'date_end', 'create_by']]
         ]);
     }
@@ -89,7 +92,7 @@ class GalerieTest extends TestCase
         if($tGroup) $data['group'][] = ['id' => $tGroup->id];
 
         $reponse = $this->actingAs($user, 'api')->json('post', 'api/galeries', $data);
-        $reponse->assertStatus(422);
+        $reponse->assertStatus(400);
     }
     public function testSetGalerieBadDate() {
         $user = User::all()->random(1)->first();
@@ -127,27 +130,30 @@ class GalerieTest extends TestCase
     }
     public function testDelGalerieAuth() {
         $data = [];
-        $user = User::all()->random(1)->first();
-        $tGalerie = Galerie::get();
-        foreach($tGalerie as $galerie) {
-            if($user->canAccessGalerie($galerie->id)) break;
-        }
-        if($galerie) $data = ['id' => $galerie->id];
+        $tGalerie = Galerie::all()->random(1)->first();
+        if($tGalerie->count() > 0) {
+            $data = ['id' => $tGalerie->id];
+            $user = User::where('id', $tGalerie->user_id)->first();
 
-        $reponse = $this->actingAs($user, 'api')->json('delete', 'api/galeries', $data);
-        $reponse->assertStatus(200);
+            $reponse = $this->actingAs($user, 'api')->json('delete', 'api/galeries', $data);
+            $reponse->assertStatus(200);
+        } else {
+            $this->fail('Pb galerie introuvable');
+        }
     }
     public function testDelGalerieBad() {
         $data = [];
         $user = User::all()->random(1)->first();
+        $gestionUser = new GestionUserInfos($user);
+
         $tGalerie = Galerie::get();
         foreach($tGalerie as $galerie) {
-            if(!$user->canAccessGalerie($galerie->id)) break;
+            if(!$gestionUser->canAccessGalerie($galerie->id)) break;
         }
         if($galerie) $data = ['id' => $galerie->id];
 
         $reponse = $this->actingAs($user, 'api')->json('delete', 'api/galeries', $data);
-        $reponse->assertStatus(422);
+        $reponse->assertStatus(400);
     }
     public function testDelGalerieNotId() {
         $data = [];

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 abstract class TestCase extends BaseTestCase
 {
     // [TESTS] Initialisation tests unitaires
-    // [TESTS] Modif phpunit.xml pour appliquer migration sur base sqlite en mémoire
+    // [TESTS] Modif phpunit.xml
     use CreatesApplication, DatabaseMigrations;
 
     protected $faker;
@@ -18,9 +18,8 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         $this->faker = Factory::create();
-        // [TESTS] Génération des clés pour token dans base sqlite
+        // [TESTS] Génération des clés pour token dans base
         $this->artisan('passport:install');
         $this->artisan('db:seed');
     }
-
 }

@@ -18,11 +18,11 @@ Route::namespace('api')->group(function () {
     Route::group(['middleware' => 'auth:api'], function() {
 
         Route::get('galeries', 'GaleriesController@getGaleries')->name('auth.galeries_get');
-        Route::get('images', 'ImagesController@getImages')->name('auth.images_get');
+        Route::post('images', 'ImagesController@getImages')->name('auth.images_get');
         Route::get('comments', 'CommentsController@getComments')->name('auth.comments_get');
 
         Route::post('galeries', 'GaleriesController@setGalerie')->name('auth.galerie_set');
-        Route::post('images', 'ImagesController@setImage')->name('auth.image_set');
+        Route::post('image_upload', 'ImagesController@setImage')->name('auth.image_set');
         Route::post('comments', 'CommentsController@setComment')->name('auth.comment_set');
         Route::post('like', 'LikesController@setLike')->name('auth.like_set');
 
@@ -35,7 +35,9 @@ Route::namespace('api')->group(function () {
             // [OAUTH] [ROLE] Inscription d'un nouvel utilisateur que pour les admins
             Route::post('signup', 'UserController@signup')->name('signup');
 
+            Route::get('groups', 'GroupsController@getInfoGroupUser')->name('auth.group_get');
             Route::post('groups', 'GroupsController@setGroup')->name('auth.group_set');
+            Route::delete('groups_user', 'GroupsController@delGroupUser')->name('auth.group_del_user');
             Route::delete('groups', 'GroupsController@delGroup')->name('admin.groups_del');
         });
 
