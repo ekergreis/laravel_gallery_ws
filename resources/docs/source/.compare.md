@@ -34,7 +34,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"username":"dolorum","password":"vero","grant_type":"tempora","client_id":"2","client_secret":"Hs9Jmsx0HDeOE4p9cHNefrLRlZI4vSgrdnjWlDgk","scope":"inventore"}'
+    -d '{"username":"necessitatibus","password":"id","grant_type":"amet","client_id":"2","client_secret":"Hs9Jmsx0HDeOE4p9cHNefrLRlZI4vSgrdnjWlDgk","scope":"neque"}'
 
 ```
 
@@ -51,12 +51,12 @@ let headers = {
 };
 
 let body = {
-    "username": "dolorum",
-    "password": "vero",
-    "grant_type": "tempora",
+    "username": "necessitatibus",
+    "password": "id",
+    "grant_type": "amet",
     "client_id": "2",
     "client_secret": "Hs9Jmsx0HDeOE4p9cHNefrLRlZI4vSgrdnjWlDgk",
-    "scope": "inventore"
+    "scope": "neque"
 }
 
 fetch(url, {
@@ -142,7 +142,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":12,"img":[{"id":11}]}'
+    -d '{"id":11,"img":[{"id":17}]}'
 
 ```
 
@@ -159,10 +159,10 @@ let headers = {
 };
 
 let body = {
-    "id": 12,
+    "id": 11,
     "img": [
         {
-            "id": 11
+            "id": 17
         }
     ]
 }
@@ -202,7 +202,7 @@ curl -X GET \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":3}'
+    -d '{"id":2}'
 
 ```
 
@@ -219,7 +219,7 @@ let headers = {
 };
 
 let body = {
-    "id": 3
+    "id": 2
 }
 
 fetch(url, {
@@ -256,7 +256,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"name":"Vacances","descript":"Nous sommes partis \u00e0 4...","date_start":"2019-07-01","date_end":"2019-07-20","group":[{"id":2}]}'
+    -d '{"name":"Vacances","descript":"Nous sommes partis \u00e0 4...","date_start":"2019-07-01","date_end":"2019-07-20","group":[{"id":7}]}'
 
 ```
 
@@ -279,7 +279,7 @@ let body = {
     "date_end": "2019-07-20",
     "group": [
         {
-            "id": 2
+            "id": 7
         }
     ]
 }
@@ -322,7 +322,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":17,"extension":"repellendus","data":"qui"}'
+    -d '{"id":2,"extension":"dolorem","data":"illum"}'
 
 ```
 
@@ -339,9 +339,9 @@ let headers = {
 };
 
 let body = {
-    "id": 17,
-    "extension": "repellendus",
-    "data": "qui"
+    "id": 2,
+    "extension": "dolorem",
+    "data": "illum"
 }
 
 fetch(url, {
@@ -380,7 +380,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":6,"comment":"J'aime beaucoup cette photo"}'
+    -d '{"id":19,"comment":"J'aime beaucoup cette photo"}'
 
 ```
 
@@ -397,7 +397,7 @@ let headers = {
 };
 
 let body = {
-    "id": 6,
+    "id": 19,
     "comment": "J'aime beaucoup cette photo"
 }
 
@@ -436,7 +436,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id_image":13}'
+    -d '{"id_image":16}'
 
 ```
 
@@ -453,7 +453,7 @@ let headers = {
 };
 
 let body = {
-    "id_image": 13
+    "id_image": 16
 }
 
 fetch(url, {
@@ -490,7 +490,7 @@ curl -X DELETE \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":13}'
+    -d '{"id":4}'
 
 ```
 
@@ -507,7 +507,7 @@ let headers = {
 };
 
 let body = {
-    "id": 13
+    "id": 4
 }
 
 fetch(url, {
@@ -544,7 +544,7 @@ curl -X DELETE \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":17}'
+    -d '{"id":3}'
 
 ```
 
@@ -561,7 +561,7 @@ let headers = {
 };
 
 let body = {
-    "id": 17
+    "id": 3
 }
 
 fetch(url, {
@@ -598,7 +598,7 @@ curl -X DELETE \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":15}'
+    -d '{"id":3}'
 
 ```
 
@@ -615,7 +615,7 @@ let headers = {
 };
 
 let body = {
-    "id": 15
+    "id": 3
 }
 
 fetch(url, {
@@ -651,7 +651,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"name":"illum","email":"nobis","password":"eius"}'
+    -d '{"name":"libero","email":"a","password":"tempore","role":"ratione"}'
 
 ```
 
@@ -668,9 +668,10 @@ let headers = {
 };
 
 let body = {
-    "name": "illum",
-    "email": "nobis",
-    "password": "eius"
+    "name": "libero",
+    "email": "a",
+    "password": "tempore",
+    "role": "ratione"
 }
 
 fetch(url, {
@@ -693,6 +694,7 @@ Parameter | Type | Status | Description
     `name` | string |  required  | Nom de l'utilisateur
         `email` | string |  required  | E-mail de l'utilisateur
         `password` | string |  required  | Mot de passe de l'utilisateur
+        `role` | string |  required  | Mot de passe de l'utilisateur
     
 <!-- END_90f45d502fd52fdc0b289e55ba3c2ec6 -->
 
@@ -752,7 +754,7 @@ curl -X POST \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":"qui","name":"Famille","usergroup":[{"id":16}]}'
+    -d '{"id":"tenetur","name":"Famille","usergroup":[{"id":7}]}'
 
 ```
 
@@ -769,11 +771,11 @@ let headers = {
 };
 
 let body = {
-    "id": "qui",
+    "id": "tenetur",
     "name": "Famille",
     "usergroup": [
         {
-            "id": 16
+            "id": 7
         }
     ]
 }
@@ -813,7 +815,7 @@ curl -X DELETE \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":8,"usergroup":[{"id":10}]}'
+    -d '{"id":8,"usergroup":[{"id":20}]}'
 
 ```
 
@@ -833,7 +835,7 @@ let body = {
     "id": 8,
     "usergroup": [
         {
-            "id": 10
+            "id": 20
         }
     ]
 }
@@ -872,7 +874,7 @@ curl -X DELETE \
     -H "Accept: application/json" \
     -H "X-Requested-With: XMLHttpRequest" \
     -H "Authorization: Bearer {token}" \
-    -d '{"id":15}'
+    -d '{"id":19}'
 
 ```
 
@@ -889,7 +891,7 @@ let headers = {
 };
 
 let body = {
-    "id": 15
+    "id": 19
 }
 
 fetch(url, {

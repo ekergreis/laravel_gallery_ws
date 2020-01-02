@@ -17,19 +17,22 @@ class UserController extends Controller
     * @bodyParam name string required Nom de l'utilisateur
     * @bodyParam email string required E-mail de l'utilisateur
     * @bodyParam password string required Mot de passe de l'utilisateur
+    * @bodyParam role string required Mot de passe de l'utilisateur
     */
     public function signup(Request $request)
     {
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string|confirmed',
+            'role' => 'required|string',
             ]);
 
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
         ]);
 
         $user->save();

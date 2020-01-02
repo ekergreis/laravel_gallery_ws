@@ -93,8 +93,8 @@ class GestionUserInfos
     * @param array $tabIDGroup
     * @return bool
     */
-    public function canShareWithGroup($tabIDGroup) {
-        if($this->CtrlRole('admin')) return true;
+    public function canShareWithGroup($tabIDGroup, $ctrlRole = true) {
+        if($ctrlRole && $this->CtrlRole('admin')) return true;
         return $this->user->group()->whereIn('group_id', $tabIDGroup)->count() == count($tabIDGroup) ? true : false;
     }
     /**

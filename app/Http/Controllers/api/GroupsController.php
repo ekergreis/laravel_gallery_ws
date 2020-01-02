@@ -80,12 +80,15 @@ class GroupsController extends Controller
         // Affectation des groupes aux users sélectionnés
         if($idGroup) {
             if(!empty($request->usergroup)) {
+                //Désactivation lien de tous les users avec le groupe
+                Group::where('id', $idGroup)->first()->user()->detach();
+
                 foreach($request->usergroup as $UserInGroup) {
                     if($gestionUser->canShareWithUser($UserInGroup['id'])) {
                         // L'utilisateur connecté a le droit de partager avec le user sélectionné
                         $userAdd=User::where('id', $UserInGroup['id'])->first();
                         $gestionUserAdd = new GestionUserInfos($userAdd);
-                        if(!$gestionUserAdd->canShareWithGroup([$idGroup])) {
+                        if(!$gestionUserAdd->canShareWithGroup([$idGroup], false)) {
                             // Affectation user s'il n'a pas déjà l'accès au groupe
                             $userAdd->group()->attach([$idGroup]);
                         }
