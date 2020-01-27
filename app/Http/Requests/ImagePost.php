@@ -26,10 +26,6 @@ class ImagePost extends FormRequest
     {
         return [
             'id' => 'required|integer|exists:galeries,id',
-            'extension' => [
-                'required',
-                Rule::in(['jpg', 'jpeg', 'png']),
-            ],
             'data' => 'required|string'
         ];
     }
@@ -38,7 +34,6 @@ class ImagePost extends FormRequest
     {
         return [
             'id.exists' => __('gallery.galerie.id_fail'),
-            'extension.*' => __('gallery.image.invalid_extension'),
             'data.*' => __('gallery.image.invalid_data'),
         ];
     }

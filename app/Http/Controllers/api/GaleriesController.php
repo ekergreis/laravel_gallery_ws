@@ -85,8 +85,8 @@ class GaleriesController extends Controller
     * Enregistre une nouvelle galerie liée à un ou des groupes
     * @bodyParam name string required Libellé de la galerie. Example: Vacances
     * @bodyParam descript string Description de la galerie. Example: Nous sommes partis à 4...
-    * @bodyParam date_start date Date début. Example: 2019-07-01
-    * @bodyParam date_end date Date fin. Example: 2019-07-20
+    * @bodyParam date_start date Date début. Example: 01/07/2019
+    * @bodyParam date_end date Date fin. Example: 20/07/2019
     * @bodyParam group.*.id integer required Identifiants des groupes autorisés à accéder à la galerie
     */
     public function setGalerie(GaleriePost $request)
@@ -100,8 +100,8 @@ class GaleriesController extends Controller
         // Préparation enregistrement de la galerie
         $galerieAdd = new Galerie(['name' => $request->name,
                         'description' => $request->descript,
-                        'date_start' => Carbon::createFromFormat('Y-m-d', $request->date_start),
-                        'date_end' => Carbon::createFromFormat('Y-m-d', $request->date_end),
+                        'date_start' => Carbon::createFromFormat('d/m/Y', $request->date_start),
+                        'date_end' => Carbon::createFromFormat('d/m/Y', $request->date_end),
                         'path' => $dirGalerie,
                         'user_id' => $gestionUser->user()->id,
                         ]);

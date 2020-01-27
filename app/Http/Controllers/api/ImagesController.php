@@ -7,6 +7,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -92,12 +93,12 @@ class ImagesController extends Controller
     }
 
     /**
-    * Ajout image
-    * Une image ne peut être ajoutée qu'une fois dans une galerie (vérification doublon par checksum)
-    * @bodyParam id integer required Identifiant de la galerie
-    * @bodyParam extension string required Extension du fichier image (limitée aux formats : jpg, jpeg, png)
-    * @bodyParam data string required Image encodée en base64
-    */
+     * Ajout image
+     * Une image ne peut être ajoutée qu'une fois dans une galerie (vérification doublon par checksum)
+     * @bodyParam id integer required Identifiant de la galerie
+     * @bodyParam extension string required Extension du fichier image (limitée aux formats : jpg, jpeg, png)
+     * @bodyParam data string required Image encodée en base64
+     */
     public function setImage(ImagePost $request)
     {
         $request->validated();
@@ -106,7 +107,10 @@ class ImagesController extends Controller
         // Vérification si l'utilisateur connecté à l'accès à la galerie
         if($gestionUser->canAccessGalerie($request->id)) {
             $extensionImg = $request->extension;
-            $dataImg = base64_decode($request->data);
+            $tabInfosImg = explode('data:image/', $request->data);
+            $tabInfosImg = explode(';base64,', $tabInfosImg[1]);
+            $extensionImg = $tabInfosImg[0];
+            $dataImg = $tabInfosImg[1];
 
             // Vérification checksum inexistant
             $checksumImg = crc32($dataImg);

@@ -26,8 +26,8 @@ class GaleriePost extends FormRequest
         $rules = [
             'name' => 'required|string|unique:galeries',
             'descript' => 'string',
-            'date_start' => 'date|date_format:Y-m-d',
-            'date_end' => 'date|date_format:Y-m-d',
+            'date_start' => 'date|date_format:d/m/Y',
+            'date_end' => 'date|date_format:d/m/Y',
             "group" => 'required|min:1',
         ];
         if(!empty($this->request->get('group'))) {
