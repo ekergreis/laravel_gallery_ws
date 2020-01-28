@@ -114,10 +114,15 @@ class GaleriesController extends Controller
                         ->galerie()->save($galerieAdd);
             }
 
-            // Création dossier de la galerie
-            Storage::disk('images')->makeDirectory($dirGalerie);
-            return response(["message" => __('gallery.galerie.add_success')], 200);
-
+            $tGalerie = Galerie::where('name', $request->name)->first();
+            if($tGalerie) {
+                // Création dossier de la galerie
+                Storage::disk('images')->makeDirectory($dirGalerie);
+                return response([
+                    "message" => __('gallery.galerie.add_success'),
+                    "id" => $tGalerie->id,
+                ], 200);
+            }
         } else {
             return response(["message" => __('gallery.galerie.add_fail')], 400);
         }
