@@ -16,7 +16,8 @@
         "laravel/framework": "^6.0",
         "laravel/passport": "^7.5",
         "laravel/tinker": "^1.0",
-        "mpociot/laravel-apidoc-generator": "^4.0"
+        "mpociot/laravel-apidoc-generator": "^4.0",
+        "standaniels/image-generator": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

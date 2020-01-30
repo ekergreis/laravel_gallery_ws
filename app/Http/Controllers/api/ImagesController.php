@@ -112,38 +112,50 @@ class ImagesController extends Controller
             $extensionImg = $tabInfosImg[0];
             $dataImg = $tabInfosImg[1];
 
-            // Vérification checksum inexistant
-            $checksumImg = crc32($dataImg);
-            $tGalerie=Galerie::where('id', $request->id)->first();
-            if($tGalerie->image()->where('checksum', $checksumImg)->count()==0) {
-                // Construction nom de l'image (token)
-                $nameImg = strtolower(Str::random(config('gallery.img_token_lenght'))).'.'.$extensionImg;
+            $dataImg = base64_decode($dataImg);
+            if (!empty($dataImg)) {
+                // Vérification checksum inexistant
+                $checksumImg = crc32($dataImg);
+                $tGalerie = Galerie::where('id', $request->id)->first();
+                if ($tGalerie->image()->where('checksum', $checksumImg)->count() == 0) {
+                    // Construction nom de l'image (token)
+                    $nameImg = strtolower(Str::random(config('gallery.img_token_lenght'))) . '.' . $extensionImg;
 
-                // Enregistrement du fichier dans le dossier de la galerie
-                Storage::disk('images')->put($tGalerie->path.'/'.$nameImg, $dataImg);
+                    // Enregistrement du fichier dans le dossier de la galerie
+                    Storage::disk('images')->put($tGalerie->path . '/' . $nameImg, $dataImg);
 
-                // Vérification existence du fichier
-                if(Storage::disk('images')->has($tGalerie->path.'/'.$nameImg)>0) {
-                    // Vérification taille du fichier
-                    if(Storage::disk('images')->size($tGalerie->path.'/'.$nameImg)>0) {
-                        // Traitement images pour création miniature
-                        $traitImg = new TraitementImages();
-                        if($traitImg->creationMiniature(Storage::disk('images')->path($tGalerie->path), $nameImg)) {
-                            //Enregistrement de l'image dans la base
-                            $tImage = new Image();
-                            $tImage->galerie_id = $tGalerie->id;
-                            $tImage->filename = $nameImg;
-                            $tImage->checksum = $checksumImg;
-                            $tImage->user_id = $gestionUser->user()->id;
-                            $tImage->save();
+                    // Vérification existence du fichier
+                    if (Storage::disk('images')->has($tGalerie->path . '/' . $nameImg) > 0) {
+                        // Vérification taille du fichier
+                        if (Storage::disk('images')->size($tGalerie->path . '/' . $nameImg) > 0) {
 
-                            return response(["message" => __('gallery.image.add_success')], 200);
+                            // Traitement images pour création miniature
+                            $traitImg = new TraitementImages();
+                            if ($traitImg->creationMiniature(Storage::disk('images')->path($tGalerie->path), $nameImg)) {
+
+                                //Enregistrement de l'image dans la base
+                                $tImage = new Image();
+                                $tImage->galerie_id = $tGalerie->id;
+                                $tImage->filename = $nameImg;
+                                $tImage->checksum = $checksumImg;
+                                $tImage->user_id = $gestionUser->user()->id;
+                                $tImage->save();
+
+                                return response([
+                                    'message' => __('gallery.image.add_success'),
+                                    'id' => $tImage->id,
+                                    'dir' => $tGalerie->path,
+                                    'mini_filename' => config('gallery.miniature_prefixe_name').$nameImg,
+                                    'filename' => $nameImg,
+                                    'createBy' => $request->user()->name,
+                                ], 200);
+                            }
                         }
                     }
+                    return response(["message" => __('gallery.image.add_trait_error')], 400);
                 }
-                return response(["message" => __('gallery.image.add_trait_error')], 400);
+                return response(["message" => __('gallery.image.add_fail_exist')], 400);
             }
-            return response(["message" => __('gallery.image.add_fail_exist')], 400);
         }
         return response(["message" => __('gallery.image.add_fail')], 400);
     }
